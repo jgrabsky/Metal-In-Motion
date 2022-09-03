@@ -19,6 +19,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = BallBearing)
 		UStaticMeshComponent* BallMesh;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = BallBearing)
+		float Magnetized = 1.0f;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
