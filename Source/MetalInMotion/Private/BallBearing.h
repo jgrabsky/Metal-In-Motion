@@ -36,4 +36,7 @@ public:
 	// Is the ball bearing attractive to magnets?
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = BallBearing)
 		bool Magnetized = true;
+		
+	// Allow the ball bearing HUD unfettered access to this class.
+	friend class ABallBearingHUD;
 };
