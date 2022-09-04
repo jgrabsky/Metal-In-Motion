@@ -1,4 +1,11 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+/**
+
+Main ball bearing implementation.
+
+Original author: Rob Baker.
+Current maintainer: Rob Baker.
+
+*********************************************************************************/
 
 #pragma once
 
@@ -7,30 +14,26 @@
 #include "Components/StaticMeshComponent.h"
 #include "BallBearing.generated.h"
 
+
+/**
+Main ball bearing class, derived from pawn but with no input and no camera.
+*********************************************************************************/
+
 UCLASS()
-class ABallBearing : public APawn
+class METALINMOTION_API ABallBearing : public APawn
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this pawn's properties
+	
+	// Create a static mesh for this ball bearing on object construction.
 	ABallBearing();
 
+	// The static mesh that represents the ball bearing.
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = BallBearing)
-		UStaticMeshComponent* BallMesh;
+		UStaticMeshComponent* BallMesh = nullptr;
 
+	// Is the ball bearing attractive to magnets?
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = BallBearing)
-		float Magnetized = 1.0f;
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
+		bool Magnetized = true;
 };

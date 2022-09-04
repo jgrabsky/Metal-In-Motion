@@ -1,38 +1,30 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+/**
 
+Main ball bearing implementation.
+
+Original author: Rob Baker.
+Current maintainer: Rob Baker.
+
+*********************************************************************************/
 
 #include "BallBearing.h"
 
-// Sets default values
+
+/**
+Create a static mesh for this ball bearing on object construction.
+*********************************************************************************/
+
 ABallBearing::ABallBearing()
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+ 	// Set this pawn to call Tick() every frame.
+
 	PrimaryActorTick.bCanEverTick = true;
 
-	BallMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Ballmesh"));
+	// Create the ball mesh, turn on its physics and set it as the root component.
 
+	BallMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BallMesh"));
+	
 	BallMesh->SetSimulatePhysics(true);
+
 	SetRootComponent(BallMesh);
 }
-
-// Called when the game starts or when spawned
-void ABallBearing::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
-// Called every frame
-void ABallBearing::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
-// Called to bind functionality to input
-void ABallBearing::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-}
-

@@ -1,4 +1,11 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+/**
+
+Metal in Motion module.
+
+Original author: Rob Baker.
+Current maintainer: Rob Baker.
+
+*********************************************************************************/
 
 #include "MetalInMotion.h"
 #include "Modules/ModuleManager.h"

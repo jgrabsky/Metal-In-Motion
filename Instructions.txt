@@ -1,0 +1,9 @@
+Copy the Source folder within this zip file, overwriting the Source folder that already exists inside the project we're working on, normally located where you installed Unreal Engine itself.
+
+For example, the folder to be overwritten might be like the following line, but it very much depends on where you created your project.
+
+D:\UnrealEngine-Release\MetalInMotion\Source
+
+When the copy is complete, locate the TouchSourceFiles.ps1 file in your project folder, right-click on it and choose "Run with Powershell". This will simply touch all of the files in your Source folder to ensure that they are rebuilt when we next compile the project. Then locate your MetalInMotion.uproject file, right-click on it, and choose "Generate Visual Studio project files" - this will ensure your project files are synchronized with the new source code files.
+
+If you don't have this menu option, then go back up yet another folder level and find and run GenerateProjectFiles.bat. This will do the same thing but not quite as effectively - Intellisense information will not be as accurate in this case.
