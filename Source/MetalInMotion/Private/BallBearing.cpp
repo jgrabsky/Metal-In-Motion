@@ -28,3 +28,30 @@ ABallBearing::ABallBearing()
 
 	SetRootComponent(BallMesh);
 }
+
+
+/**
+Called when the game starts or when spawned.
+*********************************************************************************/
+
+void ABallBearing::BeginPlay()
+{
+	Super::BeginPlay();
+
+	InitialLocation = BallMesh->GetComponentLocation();
+
+	BallMesh->SetLinearDamping(0.5f);
+	BallMesh->SetAngularDamping(0.5f);
+}
+
+
+/**
+Control the movement of the ball bearing, called every frame.
+*********************************************************************************/
+
+void ABallBearing::Tick(float deltaSeconds)
+{
+	Super::Tick(deltaSeconds);
+
+	InContact = false;
+}
