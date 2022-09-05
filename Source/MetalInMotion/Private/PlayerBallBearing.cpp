@@ -99,6 +99,14 @@ Have the ball bearing perform a jump.
 
 void APlayerBallBearing::Jump()
 {
+	// Only jump if we're in contact with something, normally the ground.
+
+	if (InContact == true)
+	{
+		// Add the impulse to the ball to perform the jump.
+
+		BallMesh->AddImpulse(FVector(0.0f, 0.0f, JumpForce * 1000.0f));
+	}
 }
 
 
@@ -108,6 +116,28 @@ Have the ball bearing perform a dash.
 
 void APlayerBallBearing::Dash()
 {
+	// Only dash if we're not dashing already.
+
+	if (DashTimer == 0.0f)
+	{
+		// Only dash if we have an existing velocity vector to dash towards.
+
+		FVector velocity = BallMesh->GetPhysicsLinearVelocity();
+
+		if (velocity.Size() > 1.0f)
+		{
+			velocity.Normalize();
+			velocity *= DashForce * 1000.0f;
+
+			// Add the impulse to the ball to perform the dash.
+
+			BallMesh->AddImpulse(velocity);
+
+			// Set the length of time that we're to dash for.
+
+			DashTimer = 1.5f;
+		}
+	}
 }
 
 
@@ -119,5 +149,30 @@ void APlayerBallBearing::Tick(float deltaSeconds)
 {
 	Super::Tick(deltaSeconds);
 
-	BallMesh->AddForce(FVector(InputLongitude, InputLatitude, 0.0f) * ControllerForce * BallMesh->GetMass());
+	FVector velocity = BallMesh->GetPhysicsLinearVelocity();
+	float z = velocity.Z;
+
+	velocity.Z = 0.0f;
+
+	if (velocity.Size() > MaximumSpeed * 100.0f)
+	{
+		velocity.Normalize();
+		velocity *= MaximumSpeed * 100.0f;
+		velocity.Z = z;
+
+		float brakingRatio = FMath::Pow(1.0f - FMath::Min(DashTimer, 1.0f), 2.0f);
+
+		FVector mergedVelocity = FMath::Lerp(BallMesh->GetPhysicsLinearVelocity(), velocity, brakingRatio);
+
+		BallMesh->SetPhysicsLinearVelocity(mergedVelocity);
+	}
+	else
+	{
+		BallMesh->AddForce(FVector(InputLongitude, InputLatitude, 0.0f) * ControllerForce * BallMesh->GetMass());
+	}
+
+	if (DashTimer > 0.0f)
+	{
+		DashTimer = FMath::Max(0.0f, DashTimer - deltaSeconds);
+	}
 }

@@ -31,10 +31,17 @@ public:
 	// Constructor for a goal for ball bearings.
 	ABallBearingGoal();
 
+	// The power of the magnetism.
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Goal)
+		float Magnetism = 7500.0f;
+
 protected:
 
 	// Hide the collision and sprite components in-game.
 	virtual void PostInitializeComponents() override;
+
+	// Add magnetism to the proximate ball bearings, drawing them towards our center.
+	virtual void Tick(float deltaSeconds) override;
 
 	// Add a ball bearing to the list of proximate bearings we're maintaining.
 	virtual void NotifyActorBeginOverlap(AActor* otherActor) override;
